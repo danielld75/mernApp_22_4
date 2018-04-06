@@ -70,6 +70,24 @@ export function editPost(req, res) {
   });
 }
 
+export function thumbUp(req, res) {
+  Post.findOneAndUpdate({cuid: req.params.cuid}, req.voteCount + 1).exec((err, post) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    res.json({post});
+  });
+}
+
+export function thumbDown(req, res) {
+  Post.findOneAndUpdate({cuid: req.params.cuid}, req.voteCount - 1).exec((err, post) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    res.json({post});
+  });
+}
+
 /**
  * Delete a post
  * @param req
